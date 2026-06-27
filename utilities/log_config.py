@@ -1,8 +1,8 @@
 # utilities/log_config.py
 
 import logging
-import os
-from logging import FileHandler, StreamHandler
+from pathlib import Path
+from logging import StreamHandler
 from flask import request, has_request_context
 
 class RequestContextFormatter(logging.Formatter):
@@ -41,11 +41,12 @@ def get_error_logger():
         logger.addHandler(console_handler)
     return logger
 
-def write_to_file(folder: str, filename: str, message: str, is_error: bool = False):
-    """Safely appends to a log file without churning root handlers."""
-    os.makedirs(folder, exist_ok=True)
-    file_path = os.path.join(folder, f"{filename}.log")
+def write_to_file(folder: str | Path, filename: str, message: str, is_error: bool = False):
+    """Safely appends to a log file using pathlib without churning root handlers."""
+    folder_path = Path(folder)
+    folder_path.mkdir(parents=True, exist_ok=True)
 
+    file_path = folder_path / f"{filename}.log"
 
-    with open(file_path, "a", encoding="utf-8") as f:
+    with file_path.open("a", encoding="utf-8") as f:
         f.write(message + "\n")
