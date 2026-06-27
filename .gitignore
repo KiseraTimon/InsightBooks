@@ -14,3 +14,4 @@ wheels/
 
 # Other files
 **/dump/**
+**/logs/**
