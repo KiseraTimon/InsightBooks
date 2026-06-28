@@ -1,0 +1,51 @@
+<!-- Book Personality Quiz & Spotlight -->
+<section class="about-section reveal-on-scroll" id="about">
+    <div class="section-container about-grid">
+        <div class="about-image-wrapper">
+            <!-- Book Personality Quiz Card -->
+            <div class="quiz-card" id="quiz-card">
+                <div class="quiz-step active" id="quiz-step-1">
+                    <h3>Find Your Book Personality</h3>
+                    <p class="quiz-question">Which setting appeals to you most?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option-btn" data-genre="Fiction">A quiet, rainy study in London</button>
+                        <button class="quiz-option-btn" data-genre="Thriller">A neon-lit futuristic metropolis</button>
+                        <button class="quiz-option-btn" data-genre="Self-Help">A sunny balcony overlooking mountains</button>
+                    </div>
+                </div>
+                <div class="quiz-step" id="quiz-step-2">
+                    <h3>Select a color palette:</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-option-btn" data-color="crimson">Warm Crimson & Gold</button>
+                        <button class="quiz-option-btn" data-color="green">Deep Forest & Emerald</button>
+                        <button class="quiz-option-btn" data-color="blue">Midnight Blue & Silver</button>
+                    </div>
+                </div>
+                <div class="quiz-step" id="quiz-step-result">
+                    <h3>Your Book Personality</h3>
+                    <p class="quiz-result-title" id="quiz-result-title">The Explorer</p>
+                    <p class="quiz-result-desc" id="quiz-result-desc">You seek worlds of deep imagery and reflection.</p>
+                    <div style="margin-top: 16px;">
+                        <a href="{{url_for('routes.homepage')}}" class="btn-pill-small" id="quiz-shop-btn">Explore Bookshop</a>
+                        <button class="btn-pill-small" id="quiz-reset-btn" style="background-color: var(--text-light); margin-left: 10px;">Retake</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="about-content">
+            <h2 class="section-heading-serif">Featured Spotlight</h2>
+            <p style="color: var(--text-gray); margin-bottom: 24px; font-size: 0.95rem;">
+                Meet our Book of the Day! Selected by our lead curators for its captivating prose and deep thematic relevance. Hover or click to reveal detail links.
+            </p>
+            <div class="spotlight-book-container" style="background-color: #ffffff; border: 1px solid var(--border-color); border-radius: var(--border-radius-card); padding: 24px; box-shadow: var(--shadow-sm); display: flex; gap: 20px; align-items: center;">
+                <img src="{{url_for('static', filename='images/book_institute.png')}}" alt="Spotlight Book" style="width: 80px; height: 110px; object-fit: cover; border-radius: 4px; box-shadow: var(--shadow-sm); transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.15) rotate(5deg)'" onmouseout="this.style.transform='scale(1)'">
+                <div>
+                    <span style="background-color: var(--primary-color-light); color: var(--primary-color); font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: var(--border-radius-pill); text-transform: uppercase;">Book of the Day</span>
+                    <h3 style="font-size: 1.15rem; margin: 8px 0 4px 0;">The Institute</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 8px;">by Stephen King</p>
+                    <a href="{{url_for('routes.homepage')}}" class="btn-pill-small" style="padding: 6px 16px;">View details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

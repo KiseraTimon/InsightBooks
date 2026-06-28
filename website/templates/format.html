@@ -1,0 +1,25 @@
+<!--Template Reference-->
+{% extends 'template.html' %}
+
+{% block title %}
+{% endblock %}</title>
+
+
+<!-- Page Specific CSS -->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/---.css')}}">
+{% endblock %}
+
+
+<!--Main Content-->
+{% block body %}
+<main>
+    {% include "***/assets/***" %}
+</main>
+{% endblock %}
+
+
+<!--Scripts-->
+{% block scripts %}
+<script src="{{url_for('static', filename='js/---.js')}}"></script>
+{% endblock %}

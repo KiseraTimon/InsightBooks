@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="InSight Books is a repository of children's and international literature. Find the best fiction, non-fiction, academic, and classics here.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+
+    <!-- Page Specific CSS -->
+     {% block css%}
+    {% endblock %}
+</head>
+<body>
+
+    <!-- Page Transition Overlay -->
+    <div class="page-transition-overlay active"></div>
+
+    <!-- Header Navigation -->
+     {% block navbar %}
+    <header class="site-header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="/" id="logo-link">InSight Books</a>
+            </div>
+            <nav class="nav-menu" id="nav-menu">
+                <a href="{{url_for('routes.homepage')}}" class="nav-link active">Home</a>
+                <a href="{{url_for('routes.homepage')}}" class="nav-link">About us</a>
+                <a href="{{url_for('routes.homepage')}}" class="nav-link">Shop</a>
+                <a href="{{url_for('routes.homepage')}}" class="nav-link">Contact us</a>
+            </nav>
+            <div class="header-actions">
+                <a href="{{url_for('routes.homepage')}}" id="user-profile-link" class="user-profile-link" aria-label="Sign In">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+                <button class="cart-toggle-btn" id="cart-toggle-btn" aria-label="Open Cart">
+                    <i class="fa-solid fa-shopping-bag"></i>
+                    <span class="cart-badge" id="cart-badge">0</span>
+                </button>
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Mobile Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    {% endblock %}
+
+    <!-- Side Cart (Drawer) -->
+     {% block sidebar %}
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="cart-close-btn" id="cart-close-btn" aria-label="Close Cart">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Dynamic Cart Items -->
+            <p class="empty-cart-message">Your cart is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-subtotal">
+                <span>Subtotal:</span>
+                <span id="cart-subtotal-val">KES 0/-</span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn" disabled>Proceed to Checkout</button>
+        </div>
+    </aside>
+    {% endblock %}
+
+    <!--Main Content-->
+    {% block body %}
+    {% endblock %}
+
+    <!-- Footer -->
+     {% block footer %}
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="{{url_for('routes.homepage')}}">Shop</a>
+                <a href="{{url_for('routes.homepage')}}" class="footer-link-disabled">Blogs</a>
+                <a href="{{url_for('routes.homepage')}}">About InSight Books</a>
+                <a href="{{url_for('routes.homepage')}}">Contact us</a>
+            </div>
+            <div class="footer-socials">
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <script>
+                window.addEventListener('DOMContentLoaded', () => {
+                    const flashedMessages = {{ messages | tojson | safe }};
+                    flashedMessages.forEach(([category, message]) => {
+                    window.InSightApp.showToast(message, category);
+                    });
+                });
+            </script>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Scripts -->
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
