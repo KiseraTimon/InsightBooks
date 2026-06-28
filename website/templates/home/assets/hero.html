@@ -1,0 +1,17 @@
+<!-- Hero Section -->
+<section class="hero-section" id="home">
+    <div class="section-container hero-grid">
+        <div class="hero-content">
+            <h1 class="hero-title">What goes into the mind,<br>comes out in a life.</h1>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search by author name, book title" aria-label="Search books" onkeydown="if(event.key==='Enter') window.location.href='/shop?q='+encodeURIComponent(this.value)">
+                <button id="search-submit-btn" aria-label="Submit search" onclick="window.location.href='/shop?q='+encodeURIComponent(document.getElementById('search-input').value)">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+        <div class="hero-image-wrapper">
+            <img src="{{url_for('static', filename='images/hero_reading.png')}}" alt="Man reading on a beanbag illustration" class="hero-illustration">
+        </div>
+    </div>
+</section>
