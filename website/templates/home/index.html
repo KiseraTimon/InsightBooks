@@ -1,0 +1,46 @@
+<!--Template Reference-->
+{% extends 'template.html' %}
+
+
+{% block title %}
+InSight Books - Discover Your Next Favorite Read
+{% endblock %}</title>
+
+
+<!-- Page Specific CSS -->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+{% endblock %}
+
+
+<!--Main Content-->
+{% block body %}
+<main>
+    <!--Hero-->
+    {% include "/home/assets/hero.html" %}
+
+    <!-- Book Personality Quiz & Spotlight -->
+    {% include "/home/assets/quiz.html" %}
+
+
+    <!-- How It Works Section -->
+    {% include "/home/assets/how_it_works.html" %}
+
+
+    <!-- Mid Quote Banner Section -->
+    {% include "/home/assets/mid_quote.html" %}
+
+
+    <!-- Testimonials Section -->
+    {% include "/home/assets/testimonials.html" %}
+
+    <!-- Community Reading Club Events Hub -->
+    {% include "/home/assets/events_hub.html" %}
+
+</main>
+{% endblock %}
+
+<!--Scripts-->
+{% block scripts %}
+<script src="{{url_for('static', filename='js/home.js')}}"></script>
+{% endblock %}
