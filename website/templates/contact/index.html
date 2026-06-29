@@ -1,0 +1,35 @@
+<!--Template Reference-->
+{% extends 'template.html' %}
+
+{% block title %}
+Contact Us | InSight Books
+{% endblock %}</title>
+
+
+<!-- Page Specific CSS -->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/contact.css')}}">
+{% endblock %}
+
+
+<!--Main Content-->
+{% block body %}
+<main class="section-container">
+    <!-- Section Heading -->
+    <h1 class="section-title-center">Get in Touch</h1>
+
+    <div class="contact-layout">
+        <!-- Contact Form Card -->
+        {% include "contact/assets/form.html" %}
+
+        <!-- Info Sidebar Widgets -->
+        {% include "contact/assets/widgets.html" %}
+    </div>
+</main>
+{% endblock %}
+
+
+<!--Scripts-->
+{% block scripts %}
+<script src="{{url_for('static', filename='js/contact.js')}}"></script>
+{% endblock %}
