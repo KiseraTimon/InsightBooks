@@ -17,6 +17,9 @@
     <!-- Global CSS -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
 
+    <!--Favicon-->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
     <!-- Page Specific CSS -->
      {% block css%}
     {% endblock %}
@@ -37,7 +40,7 @@
                 <a href="{{url_for('routes.homepage')}}" class="nav-link active">Home</a>
                 <a href="{{url_for('routes.about')}}" class="nav-link">About us</a>
                 <a href="{{url_for('routes.homepage')}}" class="nav-link">Shop</a>
-                <a href="{{url_for('routes.homepage')}}" class="nav-link">Contact us</a>
+                <a href="{{url_for('routes.contact')}}" class="nav-link">Contact us</a>
             </nav>
             <div class="header-actions">
                 <a href="{{url_for('routes.homepage')}}" id="user-profile-link" class="user-profile-link" aria-label="Sign In">
@@ -90,8 +93,8 @@
             <div class="footer-links">
                 <a href="{{url_for('routes.homepage')}}">Shop</a>
                 <a href="{{url_for('routes.homepage')}}" class="footer-link-disabled">Blogs</a>
-                <a href="{{url_for('routes.homepage')}}">About InSight Books</a>
-                <a href="{{url_for('routes.homepage')}}">Contact us</a>
+                <a href="{{url_for('routes.about')}}">About InSight Books</a>
+                <a href="{{url_for('routes.contact')}}">Contact us</a>
             </div>
             <div class="footer-socials">
                 <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
