@@ -1,0 +1,39 @@
+<!-- Contact Form Card -->
+<div class="contact-form-card">
+    <h2>Send us a Message</h2>
+    <p>Have a question about book reservations, memberships, or local shipping? Drop us a line.</p>
+
+    <form id="contact-form" action="{{url_for('routes.contact')}}" method="POST">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="contact-name">Full Name</label>
+                <div class="form-input-wrapper">
+                    <i class="fa-regular fa-user"></i>
+                    <input type="text" id="contact-name" name="name" placeholder="John Doe" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contact-email">Email Address</label>
+                <div class="form-input-wrapper">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" id="contact-email" name="email" placeholder="john@example.com" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label for="contact-subject">Subject</label>
+            <div class="form-input-wrapper">
+                <i class="fa-regular fa-bookmark"></i>
+                <input type="text" id="contact-subject" name="subject" placeholder="Book reservations, events..." required>
+            </div>
+        </div>
+
+        <div class="form-group-textarea">
+            <label for="contact-message">Your Message</label>
+            <textarea id="contact-message" name="message" placeholder="Type your message here..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-pill">Send Message</button>
+    </form>
+</div>
