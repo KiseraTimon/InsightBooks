@@ -1,22 +1,19 @@
-// -------------------------------------------------------------------------
-// Global Script - Handles Cart Sync, Navbar Auth Indicators, Mobile Menu, Transitions
-// -------------------------------------------------------------------------
+// Global Script: Handles Cart Sync, Navbar Auth Indicators, Mobile Menu, Transitions
 
 window.InSightApp = {
     // Simulated Authentication helper
-    isLoggedIn: function() {
+    isLoggedIn: function () {
         return localStorage.getItem('insight_books_user_logged_in') === 'true';
     },
-    
-    getUserEmail: function() {
+    getUserEmail: function () {
         return localStorage.getItem('insight_books_user_email') || 'visitor@example.com';
     },
 
-    getUserName: function() {
+    getUserName: function () {
         return localStorage.getItem('insight_books_user_name') || 'Guest Reader';
     },
 
-    login: function(email, name) {
+    login: function (email, name) {
         localStorage.setItem('insight_books_user_logged_in', 'true');
         localStorage.setItem('insight_books_user_email', email);
         localStorage.setItem('insight_books_user_name', name);
@@ -24,7 +21,7 @@ window.InSightApp = {
         this.showToast(`Welcome back, ${name}!`);
     },
 
-    logout: function() {
+    logout: function () {
         localStorage.removeItem('insight_books_user_logged_in');
         localStorage.removeItem('insight_books_user_email');
         localStorage.removeItem('insight_books_user_name');
@@ -32,10 +29,10 @@ window.InSightApp = {
         this.showToast('You have been logged out.', true);
     },
 
-    updateAuthUI: function() {
+    updateAuthUI: function () {
         const userProfileLink = document.getElementById('user-profile-link');
         const navMenu = document.getElementById('nav-menu');
-        
+
         if (this.isLoggedIn()) {
             if (userProfileLink) {
                 userProfileLink.href = '/dashboard';
@@ -50,7 +47,7 @@ window.InSightApp = {
                 readsLink.className = 'nav-link';
                 readsLink.id = 'nav-link-reads';
                 readsLink.textContent = 'Reads';
-                
+
                 // Find contact us link to insert before
                 const contactLink = Array.from(navMenu.querySelectorAll('.nav-link'))
                     .find(el => el.textContent.toLowerCase().includes('contact'));
@@ -73,30 +70,10 @@ window.InSightApp = {
                 readsLink.remove();
             }
         }
-    },
-
-    // Global Toast Notification Helper
-    showToast: function(message, isError = false) {
-        const toastContainer = document.getElementById('toast-container');
-        if (!toastContainer) return;
-        
-        const toast = document.createElement('div');
-        toast.className = `toast ${isError ? 'error' : ''}`;
-        toast.innerHTML = `
-            <i class="fa-solid ${isError ? 'fa-circle-exclamation' : 'fa-circle-check'}"></i>
-            <span>${message}</span>
-        `;
-        toastContainer.appendChild(toast);
-        
-        setTimeout(() => {
-            toast.remove();
-        }, 3000);
     }
 };
 
-// -------------------------------------------------------------------------
 // Helper for Dynamic Randomized Loaders
-// -------------------------------------------------------------------------
 function getLoaderHTML(type) {
     if (type === 'book-flip') {
         return `
@@ -128,7 +105,7 @@ function getLoaderHTML(type) {
 
 function initializeLoaderOverlay(overlay) {
     if (!overlay) return;
-    
+
     // Check if there is an active transition cached
     let activeType = sessionStorage.getItem('insight_transition_animation');
     if (!activeType) {
@@ -140,16 +117,33 @@ function initializeLoaderOverlay(overlay) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // -------------------------------------------------------------------------
     // Page Transitions Overlay Creation & Link Interceptions
-    // -------------------------------------------------------------------------
+
+    // Manual Alert Dismissal Logic
+    const alertCloseButtons = document.querySelectorAll('.btn-close[data-bs-dismiss="alert"]');
+
+    alertCloseButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Find the parent alert box
+            const alertBox = this.closest('.alert');
+            if (alertBox) {
+                // Fade it out
+                alertBox.classList.remove('show');
+                // Remove it from the DOM after the fade transition (150ms)
+                setTimeout(() => {
+                    alertBox.remove();
+                }, 150);
+            }
+        });
+    });
+
     let transitionOverlay = document.querySelector('.page-transition-overlay');
     if (!transitionOverlay) {
         transitionOverlay = document.createElement('div');
         transitionOverlay.className = 'page-transition-overlay active';
         document.body.appendChild(transitionOverlay);
     }
-    
+
     // Initialize current loader graphics
     initializeLoaderOverlay(transitionOverlay);
 
@@ -177,35 +171,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const href = anchor.getAttribute('href');
         // Filter out: hash anchors, target blank, and disabled links
         if (
-            href && 
-            href.startsWith('/') && 
-            !href.startsWith('/#') && 
-            !anchor.getAttribute('target') && 
+            href &&
+            href.startsWith('/') &&
+            !href.startsWith('/#') &&
+            !anchor.getAttribute('target') &&
             !anchor.classList.contains('footer-link-disabled')
         ) {
             e.preventDefault();
-            
+
             // Randomize next page loader graphic
             const types = ['book-flip', 'circular-tracker', 'quill-pulse'];
             const nextType = types[Math.floor(Math.random() * types.length)];
             sessionStorage.setItem('insight_transition_animation', nextType);
-            
+
             transitionOverlay.innerHTML = getLoaderHTML(nextType);
             transitionOverlay.classList.add('active');
-            
+
             setTimeout(() => {
                 window.location.href = href;
             }, 600); // Wait for fade-in transition
         }
     });
 
-    // -------------------------------------------------------------------------
     // DOM Elements
-    // -------------------------------------------------------------------------
     const navMenu = document.getElementById('nav-menu');
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const navLinks = document.querySelectorAll('.nav-link');
-    
+
     const cartToggleBtn = document.getElementById('cart-toggle-btn');
     const cartCloseBtn = document.getElementById('cart-close-btn');
     const cartSidebar = document.getElementById('cart-sidebar');
@@ -218,9 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Auth UI
     window.InSightApp.updateAuthUI();
 
-    // -------------------------------------------------------------------------
     // Mobile Navigation Menu Toggles
-    // -------------------------------------------------------------------------
     if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener('click', () => {
             navMenu.classList.toggle('active');
@@ -243,9 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // -------------------------------------------------------------------------
     // Sidebar Cart Logic (Synchronized via LocalStorage)
-    // -------------------------------------------------------------------------
     function getCart() {
         try {
             return JSON.parse(localStorage.getItem('insight_books_cart')) || [];
@@ -278,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateCartUI() {
         if (!cartItemsContainer) return;
-        
+
         const cart = getCart();
         cartItemsContainer.innerHTML = '';
         let subtotal = 0;
@@ -312,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <i class="fa-regular fa-trash-can"></i>
                     </button>
                 `;
-                
+
                 // Remove fully from cart
                 cartItemEl.querySelector('.cart-item-remove').addEventListener('click', (e) => {
                     const idToRemove = parseInt(e.currentTarget.getAttribute('data-id'));
@@ -332,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cartItemsContainer.addEventListener('click', (e) => {
             const btnMinus = e.target.closest('.btn-minus');
             const btnPlus = e.target.closest('.btn-plus');
-            
+
             if (btnMinus) {
                 const id = parseInt(btnMinus.getAttribute('data-id'), 10);
                 window.InSightCart.updateQuantity(id, -1);
@@ -345,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Expose Add to Cart and updates globally
     window.InSightCart = {
-        add: function(product) {
+        add: function (product) {
             const cart = getCart();
             const existingIndex = cart.findIndex(item => item.id === product.id);
             if (existingIndex > -1) {
@@ -357,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.InSightApp.showToast(`"${product.title}" added to cart!`);
             toggleCart(true);
         },
-        updateQuantity: function(id, delta) {
+        updateQuantity: function (id, delta) {
             const cart = getCart();
             const itemIndex = cart.findIndex(item => item.id === id);
             if (itemIndex > -1) {
@@ -369,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 saveCart(cart);
             }
         },
-        open: function() {
+        open: function () {
             toggleCart(true);
         }
     };
