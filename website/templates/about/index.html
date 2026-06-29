@@ -1,0 +1,36 @@
+<!--Template Reference-->
+{% extends 'template.html' %}
+
+{% block title %}
+About Us | InSight Books
+{% endblock %}</title>
+
+
+<!-- Page Specific CSS -->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/about.css')}}">
+{% endblock %}
+
+
+<!--Main Content-->
+{% block body %}
+<main>
+    <!-- About Hero -->
+    {% include "about/assets/hero.html" %}
+
+    <!-- Core Pillars -->
+    {% include "about/assets/pillars.html" %}
+
+    <!-- Interactive Timeline -->
+    {% include "about/assets/timeline.html" %}
+
+    <!-- Meet the Curators -->
+    {% include "about/assets/curators.html" %}
+</main>
+{% endblock %}
+
+
+<!--Scripts-->
+{% block scripts %}
+<script src="{{url_for('static', filename='js/about.js')}}"></script>
+{% endblock %}
