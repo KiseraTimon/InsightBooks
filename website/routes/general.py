@@ -5,3 +5,9 @@ from flask import render_template
 @routes.route("/")
 def homepage():
     return render_template("home/index.html")
+
+
+# About
+@routes.route("/about")
+def about():
+    return render_template("about/index.html")
